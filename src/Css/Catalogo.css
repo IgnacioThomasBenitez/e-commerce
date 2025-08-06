@@ -1,0 +1,50 @@
+.catalogo-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  font-family: "Segoe UI", sans-serif;
+}
+
+.catalogo-title {
+  text-align: center;
+  font-size: 2rem;
+  color: #1f2937;
+  margin-bottom: 2rem;
+}
+
+.catalogo-controls {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.catalogo-input,
+.catalogo-select {
+  padding: 0.75rem 1rem;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.2s;
+  background-color: #f9fafb;
+}
+
+.catalogo-input:focus,
+.catalogo-select:focus {
+  border-color: #3b82f6;
+}
+
+.catalogo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+/* Responsive padding */
+@media (max-width: 640px) {
+  .catalogo-container {
+    padding: 1rem;
+  }
+}
