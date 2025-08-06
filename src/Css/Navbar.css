@@ -26,7 +26,6 @@
 /* Logo */
 .navbar-logo img {
   height: 40px;
-  user-select: none;
   pointer-events: none;
 }
 
@@ -40,14 +39,16 @@
   margin: 0;
   position: absolute;
   top: 56px;
-  left: 1rem;
+  right: 1rem; /* Cambiado para abrir desde la derecha */
+  left: auto;
   background-color: #ffffff;
   border-radius: 6px;
   width: 160px;
   box-shadow: 0 3px 6px rgba(0,0,0,0.5);
-  transition: opacity 0.3s ease;
+  transition: opacity 0.3s ease, transform 0.3s ease;
   opacity: 0;
   pointer-events: none;
+  transform: translateY(-10px); /* animación de entrada */
 }
 
 /* Menú visible cuando activo */
@@ -55,6 +56,7 @@
   display: flex;
   opacity: 1;
   pointer-events: auto;
+  transform: translateY(0);
 }
 
 /* Items del menú */
@@ -69,7 +71,7 @@
   font-size: 1.2rem;
   display: flex;
   align-items: center;
-  gap: 8px; /* espacio entre icono y texto */
+  gap: 8px;
   padding: 8px 12px;
   transition: background-color 0.2s ease;
   border-radius: 4px;
@@ -95,7 +97,7 @@
   text-decoration: none;
   display: flex;
   align-items: center;
-  margin-left: auto; /* empuja carrito a la derecha */
+  margin-left: auto;
 }
 
 .cart-icon {
@@ -112,7 +114,6 @@
   padding: 2px 7px;
   font-size: 0.8rem;
   font-weight: bold;
-  user-select: none;
   transform-origin: center;
   transition: transform 0.3s ease;
 }
@@ -134,7 +135,6 @@
   height: 22px;
   justify-content: center;
   padding: 0;
-  user-select: none;
   z-index: 1100;
 }
 
@@ -172,6 +172,7 @@
     background: none;
     box-shadow: none;
     width: auto;
+    transform: none !important;
   }
 
   .navbar-toggle {
