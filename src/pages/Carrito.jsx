@@ -50,7 +50,7 @@ function Carrito() {
                 Vaciar carrito
               </button>
               <Link to="/checkout">
-                <button className="btn-checkout">Ir al Checkout</button>
+                <button className="btn-checkout">Finalizá tu compra</button>
               </Link>
             </div>
           </div>

@@ -10,67 +10,81 @@ function Checkout() {
   const [nombre, setNombre] = useState("");
   const [email, setEmail] = useState("");
 
-  const total = carrito.reduce((sum, item) => sum + item.precio * item.cantidad, 0);
+  const total = carrito.reduce(
+    (sum, item) => sum + item.precio * item.cantidad,
+    0
+  );
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     if (!nombre || !email) {
-      alert("Completá todos los campos");
+      alert("Por favor, completá todos los campos.");
       return;
     }
 
-    alert("¡Compra realizada con éxito!");
+    alert("¡Compra realizada con éxito! Gracias por confiar en nosotros.");
     vaciarCarrito();
     navigate("/");
   };
 
   return (
     <div className="checkout-container">
-  <h1>Checkout</h1>
+      <h1>Finalizá tu compra</h1>
 
-  {carrito.length === 0 ? (
-    <p>No hay productos en el carrito.</p>
-  ) : (
-    <>
-      <form onSubmit={handleSubmit} className="checkout-form">
-        <div className="form-group">
-          <label>Nombre:</label>
-          <input
-            type="text"
-            value={nombre}
-            onChange={(e) => setNombre(e.target.value)}
-          />
-        </div>
+      {carrito.length === 0 ? (
+        <p>No hay productos en el carrito.</p>
+      ) : (
+        <form onSubmit={handleSubmit} className="checkout-form">
+          <div className="form-group">
+            <label htmlFor="nombre">Nombre completo</label>
+            <input
+              type="text"
+              id="nombre"
+              placeholder="Tu nombre"
+              value={nombre}
+              onChange={(e) => setNombre(e.target.value)}
+            />
+          </div>
 
-        <div className="form-group">
-          <label>Email:</label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </div>
+          <div className="form-group">
+            <label htmlFor="email">Correo electrónico</label>
+            <input
+              type="email"
+              id="email"
+              placeholder="tuemail@email.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
 
-        <div className="resumen">
-          <h3>Resumen:</h3>
-          <ul>
-            {carrito.map((item) => (
-              <li key={item.id}>
-                {item.nombre} x{item.cantidad} — ${item.precio * item.cantidad}
-              </li>
-            ))}
-          </ul>
+          <div className="resumen">
+            <h3>Resumen de tu pedido:</h3>
+            <ul>
+              {carrito.map((item) => (
+                <li key={item.id} className="resumen-item">
+                  <img
+                    src={item.imagen}
+                    alt={item.nombre}
+                    className="resumen-img"
+                  />
+                  <div>
+                    {item.nombre} x{item.cantidad} — $
+                    {item.precio * item.cantidad}
+                  </div>
+                </li>
+              ))}
+            </ul>
 
-          <h3>Total: ${total}</h3>
-        </div>
+            <h3 className="total">Total a pagar: ${total}</h3>
+          </div>
 
-        <button type="submit" className="btn-finalizar">Finalizar compra</button>
-      </form>
-    </>
-  )}
-</div>
-
+          <button type="submit" className="btn-finalizar">
+            Finalizár compra
+          </button>
+        </form>
+      )}
+    </div>
   );
 }
 

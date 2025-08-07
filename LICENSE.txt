@@ -1,0 +1,5 @@
+MIT License
+
+Este código puede ser usado, modificado y redistribuido con fines personales o comerciales sin restricción.
+
+No se otorgan garantías. El autor no se hace responsable de ningún daño derivado del uso de este código.
