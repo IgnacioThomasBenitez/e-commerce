@@ -79,7 +79,7 @@
 .navbar-menu li a:hover,
 .navbar-menu li a:focus {
   background-color: #ff0095; /* Verde acento */
-  color: #1f1f1f; /* Texto oscuro sobre verde */
+  color: #ffffff; /* Texto oscuro sobre verde */
   outline: none;
 }
 
@@ -104,7 +104,7 @@
   top: -6px;
   right: -10px;
   background-color: #ff0095; /* Verde acento */
-  color: #1f1f1f; /* Texto oscuro */
+  color: #fff9f9; /* Texto oscuro */
   border-radius: 50%;
   padding: 2px 7px;
   font-size: 0.8rem;
