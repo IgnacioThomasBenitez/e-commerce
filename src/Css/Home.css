@@ -1,6 +1,9 @@
 .home-container {
   text-align: center;
   padding: 20px;
+  background-color: #1f1f1f;
+  color: #eaeaea; /* Texto claro */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .carrusel {
@@ -11,7 +14,8 @@
   margin: 0 auto 30px;
   overflow: hidden;
   border-radius: 12px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.6);
+  border: 2px solid #ff0095; /* Borde verde vibrante */
 }
 
 .slide {
@@ -32,14 +36,17 @@
 .catalogo-link {
   display: inline-block;
   margin-top: 20px;
-  padding: 10px 20px;
-  background-color: #0074D9;
-  color: white;
+  padding: 12px 24px;
+  background-color: #ff0095; /* Verde principal */
+  color: #1a1a1a;
   border-radius: 8px;
   text-decoration: none;
-  transition: background-color 0.3s;
+  font-weight: bold;
+  letter-spacing: 1px;
+  transition: background-color 0.3s, transform 0.2s;
 }
 
 .catalogo-link:hover {
-  background-color: #005fa3;
+  background-color: #ff0095;
+  transform: translateY(-2px);
 }

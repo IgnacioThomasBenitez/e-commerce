@@ -2,16 +2,16 @@
   max-width: 600px;
   margin: 40px auto;
   padding: 25px;
-  background: #ffffff;
+  background: #1f1f1f; /* Fondo oscuro */
   border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
 }
 
 .checkout-container h1 {
   text-align: center;
   margin-bottom: 30px;
   font-size: 28px;
-  color: #111827;
+  color: #eaeaea; /* Texto claro */
 }
 
 .checkout-form .form-group {
@@ -22,20 +22,29 @@
   display: block;
   font-weight: 600;
   margin-bottom: 8px;
-  color: #374151;
+  color: #cccccc; /* Gris claro */
 }
 
 .checkout-form input {
   width: 100%;
   padding: 12px;
-  border: 1px solid #d1d5db;
+  border: 1px solid #333;
   border-radius: 8px;
   font-size: 16px;
+  background-color: #2a2a2a;
+  color: #eaeaea;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.checkout-form input:focus {
+  border-color: #ff0095;
+  box-shadow: 0 0 6px rgba(139, 195, 74, 0.5);
+  outline: none;
 }
 
 .resumen {
   margin-top: 30px;
-  background: #f3f4f6;
+  background: #2a2a2a; /* Fondo más claro que el contenedor */
   padding: 20px;
   border-radius: 10px;
 }
@@ -43,6 +52,7 @@
 .resumen h3 {
   margin-bottom: 12px;
   font-size: 20px;
+  color: #eaeaea;
 }
 
 .resumen ul {
@@ -53,19 +63,19 @@
 
 .resumen li {
   margin-bottom: 6px;
-  color: #4b5563;
+  color: #b0b0b0;
 }
 
 .total {
   font-weight: bold;
-  color: #111827;
+  color: #ff0095; /* Verde acento */
   margin-top: 10px;
 }
 
 .btn-finalizar {
   width: 100%;
-  background: #10b981;
-  color: white;
+  background:#ff0095; /* Verde acento */
+  color: #1f1f1f;
   padding: 14px;
   border: none;
   border-radius: 8px;
@@ -75,7 +85,7 @@
 }
 
 .btn-finalizar:hover {
-  background: #059669;
+  background: #ff0095;
 }
 
 .resumen-item {

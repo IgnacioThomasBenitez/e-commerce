@@ -72,10 +72,10 @@ function Checkout() {
       };
 
       const response = await emailjs.send(
-        "service_lo2b244",     // Tu Service ID
-        "template_bgrfnbv",    // Tu Template ID
+        "service_lo2b244",     // Service ID
+        "template_bgrfnbv",    // Template ID
         templateParams,
-        "0mfER7R_j1KtnPMs8"    // Tu Public Key
+        "0mfER7R_j1KtnPMs8"    // Public Key
       );
 
       console.log("✅ Email enviado exitosamente!", response.status, response.text);

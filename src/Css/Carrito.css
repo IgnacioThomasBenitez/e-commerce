@@ -3,11 +3,16 @@
   margin: 40px auto;
   padding: 20px;
   font-family: 'Segoe UI', sans-serif;
+  background-color: #1f1f1f;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  color: #eaeaea;
 }
 
 .carrito-vacio {
   font-size: 1rem;
-  color: #555;
+  color: #9ca3af;
+  text-align: center;
 }
 
 .carrito-lista {
@@ -18,20 +23,41 @@
 
 .carrito-item {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  background: #f3f4f6;
+  justify-content: space-between;
+  background: #2a2a2a;
   padding: 15px;
   margin-bottom: 10px;
   border-radius: 8px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.carrito-item:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.carrito-img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 6px;
+  margin-right: 15px;
+}
+
+.item-info {
+  flex: 1;
+  margin-left: 10px;
 }
 
 .item-info h3 {
   margin-bottom: 5px;
+  color: #eaeaea;
 }
 
 .item-info p {
   margin: 2px 0;
+  color: #ff0095; /* verde acento */
 }
 
 .btn-eliminar {
@@ -41,15 +67,19 @@
   padding: 8px 12px;
   border-radius: 6px;
   cursor: pointer;
-  transition: background 0.3s;
+  transition: background 0.3s ease, transform 0.2s ease;
 }
 
 .btn-eliminar:hover {
   background: #dc2626;
+  transform: scale(1.05);
 }
 
 .carrito-total {
   margin-top: 20px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #ff0095;
 }
 
 .carrito-botones {
@@ -64,47 +94,26 @@
   border: none;
   border-radius: 6px;
   cursor: pointer;
-  font-weight: 500;
-  transition: background 0.3s;
+  font-weight: 600;
+  transition: background 0.3s ease, transform 0.2s ease;
 }
 
 .btn-vaciar {
-  background-color: #9ca3af;
+  background-color: #555;
   color: white;
 }
 
 .btn-vaciar:hover {
-  background-color: #6b7280;
+  background-color: #444;
+  transform: translateY(-2px);
 }
 
 .btn-checkout {
-  background-color: #10b981;
-  color: white;
+  background-color: #ff0095; /* verde principal */
+  color: #1a1a1a;
 }
 
 .btn-checkout:hover {
-  background-color: #059669;
-}
-
-.carrito-img {
-  width: 60px;
-  height: 60px;
-  object-fit: cover;
-  border-radius: 6px;
-  margin-right: 15px;
-}
-
-.carrito-item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background: #f3f4f6;
-  padding: 15px;
-  margin-bottom: 10px;
-  border-radius: 8px;
-}
-
-.item-info {
-  flex: 1;
-  margin-left: 10px;
+  background-color: #ff0095;
+  transform: translateY(-2px);
 }

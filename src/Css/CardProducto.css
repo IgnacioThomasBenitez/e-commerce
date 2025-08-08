@@ -1,12 +1,12 @@
 .card-producto {
-  border: 1px solid #e5e7eb;
+  border: 1px solid #2e2e2e;
   border-radius: 12px;
   padding: 1rem;
   width: 100%;
   max-width: 250px;
-  background-color: #fff;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-  transition: transform 0.2s, box-shadow 0.2s;
+  background-color: #1f1f1f; /* Fondo oscuro */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -14,8 +14,8 @@
 }
 
 .card-producto:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
 }
 
 .card-producto img {
@@ -23,35 +23,39 @@
   height: auto;
   border-radius: 8px;
   object-fit: cover;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.8rem;
 }
 
 .card-producto h3 {
   font-size: 1.1rem;
-  color: #1f2937;
+  color: #eaeaea; /* Texto claro */
   margin: 0.5rem 0;
+  font-weight: 600;
 }
 
 .card-producto p {
   font-weight: bold;
-  color: #10b981;
+  color: #ff0095; /* Verde acento */
   margin: 0.5rem 0;
+  font-size: 1rem;
 }
 
 .card-producto button {
   margin-top: auto;
   padding: 0.6rem 1.2rem;
-  background-color: #3b82f6;
-  color: white;
+  background-color: #ff0095; /* Verde vibrante */
+  color: #1a1a1a;
   border: none;
   border-radius: 8px;
   cursor: pointer;
   font-size: 0.9rem;
-  transition: background-color 0.2s;
+  font-weight: bold;
+  transition: background-color 0.2s, transform 0.2s;
 }
 
 .card-producto button:hover {
-  background-color: #2563eb;
+  background-color: #ff0095;
+  transform: translateY(-2px);
 }
 
 .card-producto a {
