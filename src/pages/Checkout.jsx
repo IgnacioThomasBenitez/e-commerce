@@ -75,32 +75,32 @@ function Checkout() {
   };
 
   const enviarEmail = async () => {
-    try {
-      const templateParams = {
-        nombre,
-        email,
-        carrito: generarTablaCarrito(),
-        total: `$${total.toFixed(2)}`,
-        fecha: new Date().toLocaleDateString("es-AR"),
-        cantidad_productos: carrito.length,
-        cuotas,
-        monto_cuota: `$${calcularMontoCuota()}`,
-        metodo_envio: metodoEnvio === "envio" ? "Envío a domicilio" : "Retiro en local",
-      };
+  try {
+    const templateParams = {
+      nombre,
+      email,
+      carrito: generarTablaCarrito(),
+      total: `$${total.toFixed(2)}`,
+      fecha: new Date().toLocaleDateString("es-AR"),
+      cantidad_productos: carrito.length,
+      cuotas,
+      monto_cuota: `$${calcularMontoCuota()}`,
+      metodo_envio: metodoEnvio === "envio" ? "Envío a domicilio" : "Retiro en local",
+    };
 
-      const response = await emailjs.send(
-        "service_lo2b244",
-        "template_bgrfnbv",
-        templateParams,
-        "0mfER7R_j1KtnPMs8"
-      );
+    await emailjs.send(
+      "service_lo2b244",
+      "template_bgrfnbv",
+      templateParams,
+      "0mfER7R_j1KtnPMs8"
+    );
 
-      return true;
-    } catch (error) {
-      console.error("Error enviando el email:", error);
-      return false;
-    }
-  };
+    return true;
+  } catch (error) {
+    console.error("Error enviando el email:", error);
+    return false;
+  }
+};
 
   const handleSubmit = async (e) => {
     e.preventDefault();
