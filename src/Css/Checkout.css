@@ -120,3 +120,91 @@
   border-radius: 6px;
   border: 1px solid #444;
 }
+
+.envio-group {
+  margin-top: 20px;
+}
+
+.envio-opciones {
+  display: flex;
+  gap: 20px;
+}
+
+.checkbox-container {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  position: relative;
+  padding-left: 30px;
+  user-select: none;
+  font-weight: 600;
+  color: #eaeaea;
+}
+
+/* Ocultar el radio nativo */
+.checkbox-container input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Cuadrado personalizado */
+.checkmark {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 20px;
+  width: 20px;
+  background-color: #2a2a2a;
+  border: 2px solid #ff0095;
+  border-radius: 4px;
+}
+
+/* Cuando está seleccionado */
+.checkbox-container input[type="radio"]:checked ~ .checkmark {
+  background-color: #ff0095;
+  border-color: #ff0095;
+}
+
+/* Cuadrado interno blanco */
+.checkbox-container .checkmark::after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.checkbox-container input[type="radio"]:checked ~ .checkmark::after {
+  display: block;
+  left: 5px;
+  top: 5px;
+  width: 8px;
+  height: 8px;
+  background: white;
+  border-radius: 2px;
+}
+
+/* Contenedor de cuotas */
+.form-group select#cuotas {
+  width: 100%;
+  padding: 12px;
+  background-color: #2a2a2a;
+  color: #eaeaea;
+  border: 1.5px solid #ff0095;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  appearance: none; /* Quita flecha nativa para estilo personalizado si querés */
+}
+
+/* Hover y focus para cuotas */
+.form-group select#cuotas:hover,
+.form-group select#cuotas:focus {
+  border-color: #ff66b2;
+  box-shadow: 0 0 8px rgba(255, 0, 149, 0.7);
+  outline: none;
+}

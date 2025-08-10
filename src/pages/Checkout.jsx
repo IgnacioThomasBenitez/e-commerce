@@ -10,6 +10,8 @@ function Checkout() {
 
   const [nombre, setNombre] = useState("");
   const [email, setEmail] = useState("");
+  const [cuotas, setCuotas] = useState(1);
+  const [metodoEnvio, setMetodoEnvio] = useState("envio");
   const [enviandoEmail, setEnviandoEmail] = useState(false);
 
   const total = carrito.reduce(
@@ -17,31 +19,34 @@ function Checkout() {
     0
   );
 
-  // Generar HTML del carrito para el email
+  const calcularMontoCuota = () => (total / cuotas).toFixed(2);
+
   const generarTablaCarrito = () => {
-    const carritoSeguro = carrito || [];
-    
-    if (carritoSeguro.length === 0) {
+    if (!carrito || carrito.length === 0) {
       return "<p>No hay productos en el carrito</p>";
     }
 
-    let filas = carritoSeguro.map(item => `
+    const filas = carrito
+      .map(
+        (item) => `
       <tr>
-        <td>${item.nombre}</td>
-        <td>${item.cantidad}</td>
-        <td>$${item.precio}</td>
-        <td>$${item.precio * item.cantidad}</td>
+        <td style="padding: 8px; border: 1px solid #ddd;">${item.nombre}</td>
+        <td style="padding: 8px; border: 1px solid #ddd; text-align: center;">${item.cantidad}</td>
+        <td style="padding: 8px; border: 1px solid #ddd; text-align: right;">$${item.precio.toFixed(2)}</td>
+        <td style="padding: 8px; border: 1px solid #ddd; text-align: right;">$${(item.precio * item.cantidad).toFixed(2)}</td>
       </tr>
-    `).join("");
+    `
+      )
+      .join("");
 
     return `
-      <table border="1" cellpadding="8" cellspacing="0" style="border-collapse: collapse; width: 100%;">
+      <table style="width: 100%; border-collapse: collapse; font-family: Arial, sans-serif;">
         <thead>
           <tr style="background-color: #f5f5f5;">
-            <th>Producto</th>
-            <th>Cantidad</th>
-            <th>Precio Unitario</th>
-            <th>Subtotal</th>
+            <th style="padding: 8px; border: 1px solid #ddd;">Producto</th>
+            <th style="padding: 8px; border: 1px solid #ddd;">Cantidad</th>
+            <th style="padding: 8px; border: 1px solid #ddd;">Precio Unitario</th>
+            <th style="padding: 8px; border: 1px solid #ddd;">Subtotal</th>
           </tr>
         </thead>
         <tbody>
@@ -49,39 +54,50 @@ function Checkout() {
         </tbody>
         <tfoot>
           <tr style="background-color: #f9f9f9; font-weight: bold;">
-            <td colspan="3">TOTAL</td>
-            <td>$${total}</td>
+            <td colspan="3" style="padding: 8px; border: 1px solid #ddd; text-align: right;">TOTAL</td>
+            <td style="padding: 8px; border: 1px solid #ddd; text-align: right;">$${total.toFixed(2)}</td>
+          </tr>
+          <tr style="background-color: #f9f9f9;">
+            <td colspan="3" style="padding: 8px; border: 1px solid #ddd; text-align: right;">Forma de pago</td>
+            <td style="padding: 8px; border: 1px solid #ddd; text-align: right;">
+              ${cuotas} ${cuotas > 1 ? `cuotas de $${calcularMontoCuota()}` : "cuota única"}
+            </td>
+          </tr>
+          <tr style="background-color: #f9f9f9;">
+            <td colspan="3" style="padding: 8px; border: 1px solid #ddd; text-align: right;">Método de entrega</td>
+            <td style="padding: 8px; border: 1px solid #ddd; text-align: right;">
+              ${metodoEnvio === "envio" ? "Envío a domicilio" : "Retiro en local"}
+            </td>
           </tr>
         </tfoot>
       </table>
     `;
   };
 
-  // Enviar email con EmailJS
   const enviarEmail = async () => {
     try {
-      console.log("Enviando email con carrito:", carrito);
-      
       const templateParams = {
-        nombre: nombre,
-        email: email,
+        nombre,
+        email,
         carrito: generarTablaCarrito(),
-        total: `$${total}`,
-        fecha: new Date().toLocaleDateString('es-AR'),
-        cantidad_productos: carrito.length
+        total: `$${total.toFixed(2)}`,
+        fecha: new Date().toLocaleDateString("es-AR"),
+        cantidad_productos: carrito.length,
+        cuotas,
+        monto_cuota: `$${calcularMontoCuota()}`,
+        metodo_envio: metodoEnvio === "envio" ? "Envío a domicilio" : "Retiro en local",
       };
 
       const response = await emailjs.send(
-        "service_lo2b244",     // Service ID
-        "template_bgrfnbv",    // Template ID
+        "service_lo2b244",
+        "template_bgrfnbv",
         templateParams,
-        "0mfER7R_j1KtnPMs8"    // Public Key
+        "0mfER7R_j1KtnPMs8"
       );
 
-      console.log("✅ Email enviado exitosamente!", response.status, response.text);
       return true;
     } catch (error) {
-      console.error("❌ Error enviando el email:", error);
+      console.error("Error enviando el email:", error);
       return false;
     }
   };
@@ -89,7 +105,6 @@ function Checkout() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validaciones
     if (!nombre.trim() || !email.trim()) {
       alert("Por favor, completá todos los campos.");
       return;
@@ -100,24 +115,22 @@ function Checkout() {
       return;
     }
 
-    // Mostrar estado de carga
     setEnviandoEmail(true);
 
     try {
-      // Intentar enviar el email
       const emailEnviado = await enviarEmail();
-      
+
       if (emailEnviado) {
-        // Si el email se envió correctamente
-        alert("¡Compra realizada con éxito! Se ha enviado un correo de confirmación. Gracias por confiar en nosotros.");
+        alert(
+          "¡Compra realizada con éxito! Se ha enviado un correo de confirmación. Gracias por confiar en nosotros."
+        );
         vaciarCarrito();
         navigate("/");
       } else {
-        // Si hubo error enviando el email
         const continuar = window.confirm(
           "La compra se procesó correctamente, pero hubo un problema enviando el correo de confirmación. ¿Deseas continuar de todas formas?"
         );
-        
+
         if (continuar) {
           vaciarCarrito();
           navigate("/");
@@ -135,10 +148,7 @@ function Checkout() {
       {carrito.length === 0 ? (
         <div className="carrito-vacio">
           <p>No hay productos en el carrito.</p>
-          <button 
-            className="btn-volver"
-            onClick={() => navigate("/")}
-          >
+          <button className="btn-volver" onClick={() => navigate("/")}>
             Volver al inicio
           </button>
         </div>
@@ -170,6 +180,53 @@ function Checkout() {
             />
           </div>
 
+          <div className="form-group">
+            <label htmlFor="cuotas">Forma de pago</label>
+            <select
+              id="cuotas"
+              value={cuotas}
+              onChange={(e) => setCuotas(Number(e.target.value))}
+              disabled={enviandoEmail}
+            >
+              {[1, 3, 6, 12].map((op) => (
+                <option key={op} value={op}>
+                  {op} {op > 1 ? "cuotas" : "cuota"}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className="form-group envio-group">
+            <label>Método de entrega</label>
+            <div className="envio-opciones">
+              <label className="checkbox-container">
+                <input
+                  type="radio"
+                  name="metodoEnvio"
+                  value="envio"
+                  checked={metodoEnvio === "envio"}
+                  onChange={() => setMetodoEnvio("envio")}
+                  disabled={enviandoEmail}
+                />
+                <span className="checkmark"></span>
+                Envío a domicilio
+              </label>
+
+              <label className="checkbox-container">
+                <input
+                  type="radio"
+                  name="metodoEnvio"
+                  value="retiro"
+                  checked={metodoEnvio === "retiro"}
+                  onChange={() => setMetodoEnvio("retiro")}
+                  disabled={enviandoEmail}
+                />
+                <span className="checkmark"></span>
+                Retiro en local
+              </label>
+            </div>
+          </div>
+
           <div className="resumen">
             <h3>Resumen de tu pedido:</h3>
             <ul>
@@ -183,7 +240,8 @@ function Checkout() {
                   <div className="resumen-info">
                     <span className="nombre">{item.nombre}</span>
                     <span className="detalle">
-                      {item.cantidad} x ${item.precio} = ${item.precio * item.cantidad}
+                      {item.cantidad} x ${item.precio.toFixed(2)} = $
+                      {(item.precio * item.cantidad).toFixed(2)}
                     </span>
                   </div>
                 </li>
@@ -191,18 +249,24 @@ function Checkout() {
             </ul>
 
             <div className="total-section">
-              <h3 className="total">Total a pagar: ${total}</h3>
+              <h3 className="total">Total a pagar: ${total.toFixed(2)}</h3>
+              {cuotas > 1 && (
+                <p className="detalle-cuotas">
+                  Pagás en {cuotas} cuotas de ${calcularMontoCuota()}
+                </p>
+              )}
+              <p>
+                <strong>Método de entrega:</strong>{" "}
+                {metodoEnvio === "envio" ? "Envío a domicilio" : "Retiro en local"}
+              </p>
               <p className="info-email">
-                📧 Se enviará un correo de confirmación a: <strong>{email || "tu email"}</strong>
+                📧 Se enviará un correo de confirmación a:{" "}
+                <strong>{email || "tu email"}</strong>
               </p>
             </div>
           </div>
 
-          <button 
-            type="submit" 
-            className="btn-finalizar"
-            disabled={enviandoEmail}
-          >
+          <button type="submit" className="btn-finalizar" disabled={enviandoEmail}>
             {enviandoEmail ? "Procesando compra..." : "Finalizar compra y enviar correo"}
           </button>
 
