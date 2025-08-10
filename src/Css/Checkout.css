@@ -68,14 +68,14 @@
 
 .total {
   font-weight: bold;
-  color: #ff0095; /* Verde acento */
+  color: #ff0095; 
   margin-top: 10px;
 }
 
 .btn-finalizar {
   width: 100%;
-  background:#ff0095; /* Verde acento */
-  color: #1f1f1f;
+  background:#ff0095; 
+  color: #f8f5f5;
   padding: 14px;
   border: none;
   border-radius: 8px;
