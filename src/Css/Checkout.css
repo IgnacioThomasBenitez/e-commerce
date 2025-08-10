@@ -136,7 +136,6 @@
   cursor: pointer;
   position: relative;
   padding-left: 30px;
-  user-select: none;
   font-weight: 600;
   color: #eaeaea;
 }
