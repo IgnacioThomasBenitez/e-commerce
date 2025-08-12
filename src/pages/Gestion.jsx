@@ -133,7 +133,7 @@ export default function Gestion() {
         </div>
       </form>
 
-      <h2>Lista de productos ({productos.length})</h2>
+      <h2 className="h2">Lista de productos ({productos.length})</h2>
       {productos.length === 0 ? (
         <p>No hay productos aún.</p>
       ) : (

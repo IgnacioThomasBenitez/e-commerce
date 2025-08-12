@@ -5,14 +5,21 @@
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background-color: #1a1a1a;
   color: #eaeaea;
+  border-radius: 15px;
+  box-shadow: 0 4px 20px #00000f;
+  margin-top: 5rem;
 }
 
 .gestion-container h1 {
   text-align: center;
   margin-bottom: 25px;
   font-size: 2.5rem;
-  color: #ff0095;
+  color: #c7c5c6;
   text-shadow: 0 2px 4px rgba(0,0,0,0.6);
+}
+
+h2{
+  margin-top: 55px;
 }
 
 .gestion-form {
@@ -45,7 +52,7 @@
   padding: 10px 14px;
   border: none;
   background-color: #ff0095;
-  color: #1a1a1a;
+  color: #f5f5f5;
   border-radius: 6px;
   cursor: pointer;
   font-weight: bold;
