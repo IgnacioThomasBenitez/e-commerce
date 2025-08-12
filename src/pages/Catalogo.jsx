@@ -5,7 +5,7 @@ import "../Css/Catalogo.css";
 function Catalogo() {
   const [productos, setProductos] = useState([]);
   const [busqueda, setBusqueda] = useState("");
-  const [categoria, setCategoria] = useState("todas");
+  const [categoria, setCategoria] = useState("Todo");
 
   // Cargar productos desde localStorage al montar
   useEffect(() => {
@@ -14,12 +14,12 @@ function Catalogo() {
   }, []);
 
   // Generar lista única de categorías
-  const categoriasUnicas = ["todas", ...new Set(productos.map(p => p.categoria))];
+  const categoriasUnicas = ["Todo", ...new Set(productos.map(p => p.categoria))];
 
   // Filtrado por nombre y categoría
   const filtrados = productos.filter(p => {
     const coincideNombre = p.nombre.toLowerCase().includes(busqueda.toLowerCase());
-    const coincideCategoria = categoria === "todas" || p.categoria === categoria;
+    const coincideCategoria = categoria === "Todo" || p.categoria === categoria;
     return coincideNombre && coincideCategoria;
   });
 
