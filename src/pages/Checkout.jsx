@@ -14,12 +14,20 @@ function Checkout() {
   const [metodoEnvio, setMetodoEnvio] = useState("envio");
   const [enviandoEmail, setEnviandoEmail] = useState(false);
 
+  // 🔹 Formateador de precios en pesos argentinos
+  const formatPrice = (valor) =>
+    new Intl.NumberFormat("es-AR", {
+      style: "currency",
+      currency: "ARS",
+      minimumFractionDigits: 2,
+    }).format(valor);
+
   const total = carrito.reduce(
     (sum, item) => sum + item.precio * item.cantidad,
     0
   );
 
-  const calcularMontoCuota = () => (total / cuotas).toFixed(2);
+  const calcularMontoCuota = () => total / cuotas;
 
   const generarTablaCarrito = () => {
     if (!carrito || carrito.length === 0) {
@@ -32,8 +40,8 @@ function Checkout() {
       <tr>
         <td style="padding: 8px; border: 1px solid #ddd;">${item.nombre}</td>
         <td style="padding: 8px; border: 1px solid #ddd; text-align: center;">${item.cantidad}</td>
-        <td style="padding: 8px; border: 1px solid #ddd; text-align: right;">$${item.precio.toFixed(2)}</td>
-        <td style="padding: 8px; border: 1px solid #ddd; text-align: right;">$${(item.precio * item.cantidad).toFixed(2)}</td>
+        <td style="padding: 8px; border: 1px solid #ddd; text-align: right;">${formatPrice(item.precio)}</td>
+        <td style="padding: 8px; border: 1px solid #ddd; text-align: right;">${formatPrice(item.precio * item.cantidad)}</td>
       </tr>
     `
       )
@@ -55,12 +63,12 @@ function Checkout() {
         <tfoot>
           <tr style="background-color: #f9f9f9; font-weight: bold;">
             <td colspan="3" style="padding: 8px; border: 1px solid #ddd; text-align: right;">TOTAL</td>
-            <td style="padding: 8px; border: 1px solid #ddd; text-align: right;">$${total.toFixed(2)}</td>
+            <td style="padding: 8px; border: 1px solid #ddd; text-align: right;">${formatPrice(total)}</td>
           </tr>
           <tr style="background-color: #f9f9f9;">
             <td colspan="3" style="padding: 8px; border: 1px solid #ddd; text-align: right;">Forma de pago</td>
             <td style="padding: 8px; border: 1px solid #ddd; text-align: right;">
-              ${cuotas} ${cuotas > 1 ? `cuotas de $${calcularMontoCuota()}` : "cuota única"}
+              ${cuotas} ${cuotas > 1 ? `cuotas de ${formatPrice(calcularMontoCuota())}` : "cuota única"}
             </td>
           </tr>
           <tr style="background-color: #f9f9f9;">
@@ -75,32 +83,32 @@ function Checkout() {
   };
 
   const enviarEmail = async () => {
-  try {
-    const templateParams = {
-      nombre,
-      email,
-      carrito: generarTablaCarrito(),
-      total: `$${total.toFixed(2)}`,
-      fecha: new Date().toLocaleDateString("es-AR"),
-      cantidad_productos: carrito.length,
-      cuotas,
-      monto_cuota: `$${calcularMontoCuota()}`,
-      metodo_envio: metodoEnvio === "envio" ? "Envío a domicilio" : "Retiro en local",
-    };
+    try {
+      const templateParams = {
+        nombre,
+        email,
+        carrito: generarTablaCarrito(),
+        total: formatPrice(total),
+        fecha: new Date().toLocaleDateString("es-AR"),
+        cantidad_productos: carrito.length,
+        cuotas,
+        monto_cuota: formatPrice(calcularMontoCuota()),
+        metodo_envio: metodoEnvio === "envio" ? "Envío a domicilio" : "Retiro en local",
+      };
 
-    await emailjs.send(
-      "service_lo2b244",
-      "template_bgrfnbv",
-      templateParams,
-      "0mfER7R_j1KtnPMs8"
-    );
+      await emailjs.send(
+        "service_lo2b244",
+        "template_bgrfnbv",
+        templateParams,
+        "0mfER7R_j1KtnPMs8"
+      );
 
-    return true;
-  } catch (error) {
-    console.error("Error enviando el email:", error);
-    return false;
-  }
-};
+      return true;
+    } catch (error) {
+      console.error("Error enviando el email:", error);
+      return false;
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -240,8 +248,8 @@ function Checkout() {
                   <div className="resumen-info">
                     <span className="nombre">{item.nombre}</span>
                     <span className="detalle">
-                      {item.cantidad} x ${item.precio.toFixed(2)} = $
-                      {(item.precio * item.cantidad).toFixed(2)}
+                      {item.cantidad} x {formatPrice(item.precio)} ={" "}
+                      {formatPrice(item.precio * item.cantidad)}
                     </span>
                   </div>
                 </li>
@@ -249,10 +257,10 @@ function Checkout() {
             </ul>
 
             <div className="total-section">
-              <h3 className="total">Total a pagar: ${total.toFixed(2)}</h3>
+              <h3 className="total">Total a pagar: {formatPrice(total)}</h3>
               {cuotas > 1 && (
                 <p className="detalle-cuotas">
-                  Pagás en {cuotas} cuotas de ${calcularMontoCuota()}
+                  Pagás en {cuotas} cuotas de {formatPrice(calcularMontoCuota())}
                 </p>
               )}
               <p>

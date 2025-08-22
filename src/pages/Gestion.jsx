@@ -8,7 +8,6 @@ export default function Gestion() {
   const [precio, setPrecio] = useState("");
   const [imagen, setImagen] = useState("");
   const [categoria, setCategoria] = useState("");
-  const [cuotas, setCuotas] = useState(1);
   const [editId, setEditId] = useState(null);
 
   useEffect(() => {
@@ -29,7 +28,6 @@ export default function Gestion() {
     setPrecio("");
     setImagen("");
     setCategoria("");
-    setCuotas(1);
     setEditId(null);
   };
 
@@ -47,7 +45,6 @@ export default function Gestion() {
       precio: Number(precio),
       imagen: imagen.trim(),
       categoria: categoria.trim(),
-      cuotas: Number(cuotas),
     };
 
     if (editId !== null) {
@@ -68,7 +65,6 @@ export default function Gestion() {
     setPrecio(prod.precio);
     setImagen(prod.imagen);
     setCategoria(prod.categoria);
-    setCuotas(prod.cuotas || 1);
     setEditId(prod.id);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
@@ -77,10 +73,6 @@ export default function Gestion() {
     if (!window.confirm("¿Seguro que querés eliminar este producto?")) return;
     setProductos((prev) => prev.filter((p) => p.id !== id));
     if (editId === id) resetForm();
-  };
-
-  const calcularPorCuota = (precio, cuotas) => {
-    return (precio / cuotas).toFixed(2);
   };
 
   return (
@@ -112,14 +104,6 @@ export default function Gestion() {
           onChange={(e) => setCategoria(e.target.value)}
         />
 
-        <select value={cuotas} onChange={(e) => setCuotas(e.target.value)}>
-          {[1, 3, 6, 12].map((op) => (
-            <option key={op} value={op}>
-              {op} {op > 1 ? "cuotas" : "cuota"}
-            </option>
-          ))}
-        </select>
-
         <div className="gestion-buttons">
           <button type="submit">
             {editId !== null ? "Guardar cambios" : "Agregar producto"}
@@ -144,8 +128,6 @@ export default function Gestion() {
               <th>Nombre</th>
               <th>Precio</th>
               <th>Categoría</th>
-              <th>Cuotas</th>
-              <th>Precio por cuota</th>
               <th>Acciones</th>
             </tr>
           </thead>
@@ -165,27 +147,6 @@ export default function Gestion() {
                 <td>{p.nombre}</td>
                 <td>${p.precio}</td>
                 <td>{p.categoria}</td>
-                <td>
-                  <select
-                    value={p.cuotas}
-                    onChange={(e) =>
-                      setProductos((prev) =>
-                        prev.map((prod) =>
-                          prod.id === p.id
-                            ? { ...prod, cuotas: Number(e.target.value) }
-                            : prod
-                        )
-                      )
-                    }
-                  >
-                    {[1, 3, 6, 12].map((op) => (
-                      <option key={op} value={op}>
-                        {op} {op > 1 ? "cuotas" : "cuota"}
-                      </option>
-                    ))}
-                  </select>
-                </td>
-                <td>${calcularPorCuota(p.precio, p.cuotas)}</td>
                 <td className="gestion-actions">
                   <button onClick={() => editarProducto(p.id)}>✏️ Editar</button>
                   <button onClick={() => eliminarProducto(p.id)}>🗑️ Eliminar</button>
